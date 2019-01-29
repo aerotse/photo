@@ -3,9 +3,12 @@ package com.xth.project.photo.mybatis.base.impl;
 import com.xth.project.photo.mybatis.base.MyBatisDao;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,6 +22,18 @@ public class MyBatisDaoImpl extends SqlSessionDaoSupport implements MyBatisDao {
 
 
     private static final Logger logger = LoggerFactory.getLogger("sqlLog");
+
+    @Autowired
+    private SqlSession sqlSession;
+
+    private boolean externalSqlSession;
+
+    @Override
+    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
+        if(externalSqlSession) {
+            sqlSession = new SqlSessionTemplate(sqlSessionFactory);
+        }
+    }
 
     public MyBatisDaoImpl() {}
 
