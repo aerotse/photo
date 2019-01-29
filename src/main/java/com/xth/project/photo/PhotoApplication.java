@@ -1,5 +1,6 @@
 package com.xth.project.photo;
 
+import com.xth.project.photo.listener.PropertiesListener;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,7 +12,15 @@ public class PhotoApplication {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(PhotoApplication.class, args);
+		SpringApplication application = new SpringApplication(PhotoApplication.class);
+		application.addListeners(new PropertiesListener("application.properties"));
+		application.run(args);
+
+		//手动启动 读取配置文件
+//		PropertiesListener propertiesListener = new PropertiesListener("application.properties");
+//		propertiesListener.onApplicationEvent(null);
+
+//		SpringApplication.run(PhotoApplication.class, args);
 	}
 
 }

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RepositoryEmergencyMapper">
+  <resultMap id="BaseResultMap" type="repositoryEmergencyDO">
+    <result column="id" jdbcType="BIGINT" property="id" />
+    <result column="hosp_code" jdbcType="VARCHAR" property="hospCode" />
+    <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+    <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="update_id" jdbcType="VARCHAR" property="updateId" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="valid_flag" jdbcType="VARCHAR" property="validFlag" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="type_code" jdbcType="LONGVARCHAR" property="typeCode" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, hosp_code, creator_id, creator_name, title, type, create_time, update_time, update_id, 
+    update_name, valid_flag, content, type_code
+  </sql>
+
+  <select id="RepositoryEmergencyDaoImpl_selectRepositoryEmergency" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from t_repository_emergency
+    <where>
+      VALID_FLAG = 'ENABLE'
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="hospCode != null">
+        and hosp_code = #{hospCode}
+      </if>
+      <if test="sortField != null">
+        and type = #{sortField}
+      </if>
+      <if test="searchContent != null">
+        and (title like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="endUpdateTime != null and startUpdateTime != null">
+        and update_time &gt;= #{startUpdateTime} and update_time &lt;= #{endUpdateTime}
+      </if>
+    </where>
+    order by
+    update_time DESC
+    <if test="startIndex !=null and pageSize !=null and startIndex >= 0 and pageSize >=0">
+      limit #{startIndex},#{pageSize}
+    </if>
+  </select>
+
+  <select id="RepositoryEmergencyDaoImpl_selectRepositoryEmergencyCount" parameterType="map" resultType="int">
+    select count(id)
+    from t_repository_emergency
+    <where>
+      VALID_FLAG = 'ENABLE'
+      <if test="id != null">
+        and id = #{id}
+      </if>
+      <if test="hospCode != null">
+        and hosp_code = #{hospCode}
+      </if>
+      <if test="sortField != null">
+        and type = #{sortField}
+      </if>
+      <if test="searchContent != null">
+        and (title like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%'))
+      </if>
+      <if test="endUpdateTime != null and startUpdateTime != null">
+        and update_time &gt;= #{startUpdateTime} and update_time &lt;= #{endUpdateTime}
+      </if>
+    </where>
+    order by
+    update_time DESC
+  </select>
+
+  <select id="RepositoryEmergencyDaoImpl_selectRepositoryEmergencyById" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from t_repository_emergency
+    <where>
+      (VALID_FLAG = 'ENABLE' or VALID_FLAG IS NULL) and id = #{id}
+    </where>
+  </select>
+
+  <insert id="RepositoryEmergencyDaoImpl_insertRepositoryEmergency" parameterType="repositoryEmergencyDO">
+    insert into t_repository_emergency
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="hospCode != null">
+        hosp_code,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="creatorName != null">
+        creator_name,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="validFlag != null">
+        valid_flag,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="typeCode != null">
+        type_code,
+      </if>
+      create_time, update_time
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hospCode != null">
+        #{hospCode,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null">
+        #{creatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="validFlag != null">
+        #{validFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="typeCode != null">
+        #{typeCode,jdbcType=LONGVARCHAR},
+      </if>
+      now(), now()
+    </trim>
+  </insert>
+
+  <update id="RepositoryEmergencyDaoImpl_updateRepositoryEmergency" parameterType="repositoryEmergencyDO">
+    update t_repository_emergency
+    <set>
+      <if test="hospCode != null">
+        hosp_code = #{hospCode,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="validFlag != null">
+        valid_flag = #{validFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="typeCode != null">
+        type_code = #{typeCode,jdbcType=LONGVARCHAR},
+      </if>
+      update_time = now()
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="RepositoryEmergencyDaoImpl_deleteRepositoryEmergency" parameterType="map" >
+    update t_repository_emergency
+    <set >
+      <if test="validFlag != null">
+        valid_flag = #{validFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      update_time = now()
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
