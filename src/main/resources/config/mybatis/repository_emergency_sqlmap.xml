@@ -16,6 +16,7 @@
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
     <result column="type_code" jdbcType="LONGVARCHAR" property="typeCode" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, hosp_code, creator_id, creator_name, title, type, create_time, update_time, update_id, 
     update_name, valid_flag, content, type_code

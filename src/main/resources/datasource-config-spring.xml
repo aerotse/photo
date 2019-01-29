@@ -8,36 +8,36 @@
     <!-- 配置数据库连接 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
-        <property name="driverClassName" value="${jdbc-0.druid.driver-class}" />
-        <property name="url"             value="${jdbc-0.druid.driver-url}" />
-        <property name="username"        value="${jdbc-0.user}" />
-        <property name="password"        value="${jdbc-0.password}" />
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url"             value="jdbc:mysql://172.16.150.203:3306/longhua_db?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true" />
+        <property name="username"        value="qqhl" />
+        <property name="password"        value="123456" />
 
         <!-- 配置初始化大小、最小、最大 -->
-        <property name="initialSize" value="${jdbc-0.druid.connection-initial-size}" />
-        <property name="minIdle"     value="${jdbc-0.druid.connection-minimum-size}" />
-        <property name="maxActive"   value="${jdbc-0.druid.connection-maximum-size}" />
+        <property name="initialSize" value="5" />
+        <property name="minIdle"     value="5" />
+        <property name="maxActive"   value="10" />
 
         <!-- 配置获取连接等待超时的时间 -->
-        <property name="maxWait"     value="${jdbc-0.druid.connection-maxwait-time}" />
+        <property name="maxWait"     value="6000" />
 
         <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
-        <property name="timeBetweenEvictionRunsMillis" value="${jdbc-0.druid.connection-maxactive-time}" />
+        <property name="timeBetweenEvictionRunsMillis" value="6000" />
 
         <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
-        <property name="minEvictableIdleTimeMillis"    value="${jdbc-0.druid.connection-minlive-time}" />
+        <property name="minEvictableIdleTimeMillis"    value="300000" />
 
-        <property name="validationQuery" value="${jdbc-0.druid.connection-test-sql}" />
-        <property name="testWhileIdle"   value="${jdbc-0.druid.test-while-idle}" />
-        <property name="testOnBorrow"    value="${jdbc-0.druid.test-on-borrow}" />
-        <property name="testOnReturn"    value="${jdbc-0.druid.test-on-return}" />
+        <property name="validationQuery" value="select 1" />
+        <property name="testWhileIdle"   value="true" />
+        <property name="testOnBorrow"    value="false" />
+        <property name="testOnReturn"    value="false" />
 
         <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
-        <property name="poolPreparedStatements" value="${jdbc-0.druid.pool-prepared-statements}" />
+        <property name="poolPreparedStatements" value="false" />
         <!-- property name="maxPoolPreparedStatementPerConnectionSize" value="20" /-->
 
         <!-- 数据库密码是否加密 -->
-        <property name="connectionProperties" value="config.decrypt=${jdbc-0.druid.config.decrypt}" />
+        <property name="connectionProperties" value="false" />
         <!-- 配置监控统计拦截的filters -->
         <property name="filters" value="stat,config"/>
     </bean>

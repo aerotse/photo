@@ -23,19 +23,25 @@ public class MyBatisDaoImpl extends SqlSessionDaoSupport implements MyBatisDao {
 
     private static final Logger logger = LoggerFactory.getLogger("sqlLog");
 
-    @Autowired
-    private SqlSession sqlSession;
+    public MyBatisDaoImpl() {}
 
+    private SqlSession sqlSession;
     private boolean externalSqlSession;
 
+
     @Override
+    @Autowired
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-        if(externalSqlSession) {
-            sqlSession = new SqlSessionTemplate(sqlSessionFactory);
+        if(!this.externalSqlSession) {
+            this.sqlSession = new SqlSessionTemplate(sqlSessionFactory);
         }
     }
 
-    public MyBatisDaoImpl() {}
+    @Override
+    @Autowired
+    public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+        super.setSqlSessionTemplate(sqlSessionTemplate);
+    }
 
     /**
      * 插入一个实体

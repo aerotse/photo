@@ -13,6 +13,7 @@ import java.util.Map;
  */
 @Component
 public class RepositoryEmergencyDaoImpl extends BaseDao implements RepositoryEmergencyDao {
+
     @Override
     public int insertRepositoryEmergency(RepositoryEmergencyDO record) {
         return super.insert("RepositoryEmergencyDaoImpl_insertRepositoryEmergency", record);
