@@ -7,6 +7,8 @@ import com.xth.project.photo.service.RepositoryEmergencyReadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -16,14 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/web/test")
 public class Test {
 
-    @Value("${jdbc-0.user}")
     private String name;
 
     @Autowired
     private RepositoryEmergencyReadService repositoryEmergencyReadService;
 
-    @RequestMapping("/demo")
-    public String testDemo(){
+    @RequestMapping(value = "/demo", method = RequestMethod.GET)
+    public String testDemo(@RequestParam(value = "id", required = false) Long id){
         String result = JSON.toJSONString(PropertyListenerConfig.getPropertyMap());
         RepositoryEmergencyDO repositoryEmergencyDO = repositoryEmergencyReadService.query();
         return JSON.toJSONString(repositoryEmergencyDO);

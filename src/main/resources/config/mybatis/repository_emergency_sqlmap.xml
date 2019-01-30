@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="RepositoryEmergencyMapper">
-  <resultMap id="BaseResultMap" type="repositoryEmergencyDO">
+<mapper namespace="com.xth.project.photo.mapper.RepositoryEmergencyMapper">
+  <resultMap id="BaseResultMap" type="com.xth.project.photo.domain.dbdo.RepositoryEmergencyDO">
     <result column="id" jdbcType="BIGINT" property="id" />
     <result column="hosp_code" jdbcType="VARCHAR" property="hospCode" />
     <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
@@ -17,65 +17,67 @@
     <result column="type_code" jdbcType="LONGVARCHAR" property="typeCode" />
   </resultMap>
 
+  <parameterMap id="RepositoryEmergencyDO" type="com.xth.project.photo.domain.dbdo.RepositoryEmergencyDO"/>
+
   <sql id="Base_Column_List">
     id, hosp_code, creator_id, creator_name, title, type, create_time, update_time, update_id, 
     update_name, valid_flag, content, type_code
   </sql>
 
-  <select id="RepositoryEmergencyDaoImpl_selectRepositoryEmergency" parameterType="map" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" />
-    from t_repository_emergency
-    <where>
-      VALID_FLAG = 'ENABLE'
-      <if test="id != null">
-        and id = #{id}
-      </if>
-      <if test="hospCode != null">
-        and hosp_code = #{hospCode}
-      </if>
-      <if test="sortField != null">
-        and type = #{sortField}
-      </if>
-      <if test="searchContent != null">
-        and (title like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%'))
-      </if>
-      <if test="endUpdateTime != null and startUpdateTime != null">
-        and update_time &gt;= #{startUpdateTime} and update_time &lt;= #{endUpdateTime}
-      </if>
-    </where>
-    order by
-    update_time DESC
-    <if test="startIndex !=null and pageSize !=null and startIndex >= 0 and pageSize >=0">
-      limit #{startIndex},#{pageSize}
-    </if>
-  </select>
+  <!--<select id="RepositoryEmergencyDaoImpl_selectRepositoryEmergency" parameterType="map" resultMap="BaseResultMap">-->
+    <!--select <include refid="Base_Column_List" />-->
+    <!--from t_repository_emergency-->
+    <!--<where>-->
+      <!--VALID_FLAG = 'ENABLE'-->
+      <!--<if test="id != null">-->
+        <!--and id = #{id}-->
+      <!--</if>-->
+      <!--<if test="hospCode != null">-->
+        <!--and hosp_code = #{hospCode}-->
+      <!--</if>-->
+      <!--<if test="sortField != null">-->
+        <!--and type = #{sortField}-->
+      <!--</if>-->
+      <!--<if test="searchContent != null">-->
+        <!--and (title like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%'))-->
+      <!--</if>-->
+      <!--<if test="endUpdateTime != null and startUpdateTime != null">-->
+        <!--and update_time &gt;= #{startUpdateTime} and update_time &lt;= #{endUpdateTime}-->
+      <!--</if>-->
+    <!--</where>-->
+    <!--order by-->
+    <!--update_time DESC-->
+    <!--<if test="startIndex !=null and pageSize !=null and startIndex >= 0 and pageSize >=0">-->
+      <!--limit #{startIndex},#{pageSize}-->
+    <!--</if>-->
+  <!--</select>-->
 
-  <select id="RepositoryEmergencyDaoImpl_selectRepositoryEmergencyCount" parameterType="map" resultType="int">
-    select count(id)
-    from t_repository_emergency
-    <where>
-      VALID_FLAG = 'ENABLE'
-      <if test="id != null">
-        and id = #{id}
-      </if>
-      <if test="hospCode != null">
-        and hosp_code = #{hospCode}
-      </if>
-      <if test="sortField != null">
-        and type = #{sortField}
-      </if>
-      <if test="searchContent != null">
-        and (title like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%'))
-      </if>
-      <if test="endUpdateTime != null and startUpdateTime != null">
-        and update_time &gt;= #{startUpdateTime} and update_time &lt;= #{endUpdateTime}
-      </if>
-    </where>
-    order by
-    update_time DESC
-  </select>
+  <!--<select id="RepositoryEmergencyDaoImpl_selectRepositoryEmergencyCount" parameterType="map" resultType="int">-->
+    <!--select count(id)-->
+    <!--from t_repository_emergency-->
+    <!--<where>-->
+      <!--VALID_FLAG = 'ENABLE'-->
+      <!--<if test="id != null">-->
+        <!--and id = #{id}-->
+      <!--</if>-->
+      <!--<if test="hospCode != null">-->
+        <!--and hosp_code = #{hospCode}-->
+      <!--</if>-->
+      <!--<if test="sortField != null">-->
+        <!--and type = #{sortField}-->
+      <!--</if>-->
+      <!--<if test="searchContent != null">-->
+        <!--and (title like CONCAT('%',#{searchContent,jdbcType=VARCHAR},'%'))-->
+      <!--</if>-->
+      <!--<if test="endUpdateTime != null and startUpdateTime != null">-->
+        <!--and update_time &gt;= #{startUpdateTime} and update_time &lt;= #{endUpdateTime}-->
+      <!--</if>-->
+    <!--</where>-->
+    <!--order by-->
+    <!--update_time DESC-->
+  <!--</select>-->
 
-  <select id="RepositoryEmergencyDaoImpl_selectRepositoryEmergencyById" resultMap="BaseResultMap" parameterType="map" >
+  <select id="selectRepositoryEmergencyById" resultMap="BaseResultMap" parameterType="long" >
     select
     <include refid="Base_Column_List" />
     from t_repository_emergency
@@ -84,7 +86,7 @@
     </where>
   </select>
 
-  <insert id="RepositoryEmergencyDaoImpl_insertRepositoryEmergency" parameterType="repositoryEmergencyDO">
+  <insert id="insertRepositoryEmergency" parameterType="com.xth.project.photo.domain.dbdo.RepositoryEmergencyDO">
     insert into t_repository_emergency
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -160,7 +162,7 @@
     </trim>
   </insert>
 
-  <update id="RepositoryEmergencyDaoImpl_updateRepositoryEmergency" parameterType="repositoryEmergencyDO">
+  <update id="updateRepositoryEmergency" parameterType="com.xth.project.photo.domain.dbdo.RepositoryEmergencyDO">
     update t_repository_emergency
     <set>
       <if test="hospCode != null">
@@ -192,7 +194,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-  <update id="RepositoryEmergencyDaoImpl_deleteRepositoryEmergency" parameterType="map" >
+  <update id="deleteyRepositoryEmergency" parameterType="map" >
     update t_repository_emergency
     <set >
       <if test="validFlag != null">
