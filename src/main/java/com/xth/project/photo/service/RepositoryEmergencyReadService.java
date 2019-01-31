@@ -7,6 +7,6 @@ import com.xth.project.photo.domain.dbdo.RepositoryEmergencyDO;
  */
 public interface RepositoryEmergencyReadService {
 
-    RepositoryEmergencyDO query();
+    RepositoryEmergencyDO query(Long id);
 
 }

@@ -16,8 +16,8 @@ public class RepositoryEmergencyReadServiceImpl implements RepositoryEmergencyRe
     private RepositoryEmergencyMapper repositoryEmergencyMapper;
 
     @Override
-    public RepositoryEmergencyDO query(){
-        RepositoryEmergencyDO repositoryEmergencyDO = repositoryEmergencyMapper.selectRepositoryEmergencyById(111L);
+    public RepositoryEmergencyDO query(Long id){
+        RepositoryEmergencyDO repositoryEmergencyDO = repositoryEmergencyMapper.selectRepositoryEmergencyById(id);
         return repositoryEmergencyDO;
     }
 
