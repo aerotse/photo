@@ -20,7 +20,7 @@ public class PhotoApplicationTests {
 	@Test
 	public void contextLoads() {
 		String result = JSON.toJSONString(PropertyListenerConfig.getPropertyMap());
-		RepositoryEmergencyDO repositoryEmergencyDO = repositoryEmergencyReadService.query(51L);
+		RepositoryEmergencyDO repositoryEmergencyDO = repositoryEmergencyReadService.query(53L);
 		System.out.println("repositoryEmergencyDO:" + JSON.toJSONString(repositoryEmergencyDO));
 	}
 
