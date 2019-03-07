@@ -44,7 +44,7 @@ public class LiKaiFuBlogReading implements PageProcessor {
         }else if (url.startsWith("http://blog.sina.com.cn/s")){
             String title = page.getHtml().xpath("//h1[@class='h1_tit']/text()").get();
 
-            String content = page.getHtml().xpath("//div[@class='BEN_cont']/allText()").get();
+            String content = page.getHtml().xpath("//div[@class='BNE_cont']/allText()").get();
 
             String timeAndSource = page.getHtml().xpath("//span[@class='time_SG_txtc']/text()").get();
 
@@ -54,6 +54,7 @@ public class LiKaiFuBlogReading implements PageProcessor {
                 content = page.getHtml().xpath("//div[@id='sina_keyword_ad_area2']/allText()").get();
 
                 timeAndSource = page.getHtml().regex("\\d{4}-\\d{2}-\\d{2}\\s\\d+.\\d+.\\d+").toString();
+
             }
 
             page.putField("title", title);
